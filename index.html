@@ -1036,10 +1036,14 @@ document.addEventListener("DOMContentLoaded", function() {
         <div id="modalWorksGrid" style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; max-height: 70vh; overflow-y: auto;">
         </div>
         <!--  -->
-        <div style="padding: 15px 20px; background: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
-            <a href="tel:0558955159" style="flex: 1; text-align: center; background: #0f1e36; color: #fff; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold;">اتصل بنا الآن 📞</a>
-            <a id="modalWhatsappBtn" href="https://wa.me/+966558955159" target="_blank" style="flex: 1; text-align: center; background: #25d366; color: #fff; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold;">اطلب تسعيرة عبر واتساب 💬</a>
-        </div>
+        <div style="display: flex; gap: 10px; padding: 15px; border-top: 1px solid #e2e8f0; align-items: stretch;">
+  <a href="tel:0558955159" style="flex: 1; background: #0f1e36; color: #fff; padding: 12px 10px; border-radius: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; font-size: 14px; text-align: center;">
+    اتصل بنا الآن 📞
+  </a>
+  <a id="modalWhatsappBtn" href="https://wa.me/+966558955159" target="_blank" rel="noopener noreferrer" onclick="var t = document.getElementById('modalCategoryTitle').innerText; this.href = 'https://wa.me/+966558955159?text=' + encodeURIComponent('السلام عليكم، استفسار بخصوص ' + t);" style="flex: 1.4; background: #25D366; color: #fff; padding: 12px 10px; border-radius: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; font-size: 14px; text-align: center;">
+    اطلب تسعيرة عبر واتساب 💬
+  </a>
+</div>
     </div>
 </div>
 
@@ -1166,7 +1170,14 @@ function toggleSectionWorks(boxId, cardElement) {
 function openPortfolioModal(catKey, catName) {
     var modal = document.getElementById('portfolioModal');
     document.getElementById('modalCategoryTitle').innerText = catName;
-    document.getElementById('modalWhatsappBtn').href = "https://wa.me/+966558955159" + encodeURIComponent("استفسار بخصوص: " + catName);
+
+    var whatsappBtn = document.getElementById('modalWhatsappBtn');
+    if (whatsappBtn) {
+        var cleanTitle = (typeof catName === 'string') ? catName.trim() : '';
+        var msg = encodeURIComponent('السلام عليكم، استفسار بخصوص ' + cleanTitle);
+        whatsappBtn.href = 'https://wa.me/+966558955159' + msg;
+    }
+
     var gridEl = document.getElementById('modalWorksGrid');
     var items = portfolioStorage[catKey] || [];
     if (items.length === 0) {
